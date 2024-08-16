@@ -1,3 +1,9 @@
+"""
+Get paxdbs from https://www.uniprot.org/id-mapping
+This takes a file of relevant proteins and intersects them with the physical links
+from STRING
+"""
+
 import pandas as pd
 
 infile = '/mnt/altnas/work/Kyle.Knightly/chipseq-analysis/extended-set/controls/9606.protein.physical.links.v12.0.txt'

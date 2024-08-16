@@ -1,4 +1,6 @@
-"""This will take a paired anchor TF file and turn it into an anchor-TF file with repeated anchors"""
+"""
+This will take a paired anchor TF file and turn it into an anchor-TF file with repeated anchors
+"""
 import pandas as pd
 import ast
 file = '/mnt/altnas/work/Kyle.Knightly/chipseq-analysis/extended-set/paired-anchor-TFs.bed'
