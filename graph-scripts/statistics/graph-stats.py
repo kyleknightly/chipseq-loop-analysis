@@ -25,12 +25,12 @@ def graph_summary_stats(G):
     stats['average_clustering_coefficient'] = nx.average_clustering(G)
     
     # Degree distribution (optional)
-    stats['degree_distribution'] = dict(G.degree())
+    #stats['degree_distribution'] = dict(G.degree())
     
     return stats
 
 # Path to the gpickle file
-file_path = "/mnt/altnas/work/Kyle.Knightly/anchor-graph/anchor-graph.gpickle"
+file_path = "/mnt/altnas/work/Kyle.Knightly/anchor-graph/hepg2/hepg2-anchor-graph.gpickle"
 
 # Load the graph from the gpickle file
 G = nx.read_gpickle(file_path)

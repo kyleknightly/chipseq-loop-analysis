@@ -8,7 +8,7 @@ import pandas as pd
 import ast
 import pickle
 
-bed_file = '/mnt/altnas/work/Kyle.Knightly/chipseq-analysis/extended-set/fake-anchors/subdivide/subdivisions-TFs.bed'
+bed_file = '/mnt/altnas/work/Kyle.Knightly/chipseq-analysis/hepg2/all-chipseq/merged-filtered/anchor-all-merged-filtered-TFs.bed'
 
 df = pd.read_csv(bed_file, sep="\t", header=None, names = ['ch1', 'start1', 'end1', 'prots1'])
     #print(df)
@@ -28,10 +28,13 @@ for _, row in df.iterrows():
 # Step 2: Calculate the total number of paired anchors
 total_anchors = len(df)
 print(len(df))
-
+spot_check=['NFYA', 'NFYB','NFYC','FOSL1','CTCF','ZNF143']
+for spot in spot_check:
+    print(spot)
+    print(protein_counts[spot])
 # Step 3: Compute the proportion for each protein
 proportions = {protein: float(count) / total_anchors for protein, count in protein_counts.items()}
-print(proportions)
+# print(proportions)
 
-with open('subdivisions-proportions.pkl', 'wb') as pickle_file:
+with open('all-merged-filtered-loop-anchor-proportions.pkl', 'wb') as pickle_file:
     pickle.dump(proportions, pickle_file)

@@ -15,7 +15,7 @@ import os
 import random
 
 # Load the heatmap data from a TSV file
-heatmap_path = '/mnt/altnas/work/Kyle.Knightly/chipseq-analysis/extended-set/same-anchor-interactions/geq250-geq50-anchor-enrichments-pseudo-anchor-contact-matrix.tsv'
+heatmap_path = '/mnt/altnas/work/Kyle.Knightly/chipseq-analysis/hepg2/matrices/enrichments-pseudo-anchor-contacts.tsv'
 df = pd.read_csv(heatmap_path, sep='\t', index_col=0)
 #print(len(df))
 # Create linkage matrix
@@ -47,7 +47,7 @@ def coph(list):
             protein2 = list[j]
             cophenetic_distance = coph_distance(protein1, protein2)
             dists.append(cophenetic_distance)
-    return np.mean(dists)
+    return np.median(dists)
     
     
 def SNR(prots): 
@@ -69,10 +69,10 @@ def SNR(prots):
         average_value = N_row.mean()
         N_average[prot] = average_value
         SNRs[prot] = signal_average[prot] / N_average[prot]
-    return np.mean(list(SNRs.values()))
+    return np.median(list(SNRs.values()))
 
 
-list_file = '/mnt/altnas/work/Kyle.Knightly/chipseq-analysis/extended-set/STRING/groups/strong-interaction-lists.tsv'
+list_file = '/mnt/altnas/work/Kyle.Knightly/chipseq-analysis/hepg2/deprecated/STRING/groups/strong-interaction-lists.tsv'
 list_df = pd.read_csv(list_file, sep='\t', header=0)
 list_df['associated_proteins'] = list_df['associated_proteins'].apply(ast.literal_eval)
 lists = [[row['protein']] + row['associated_proteins'] for index, row in list_df.iterrows()]
@@ -95,7 +95,7 @@ idtoprot = {n: ordered_df.index[n] for n in range(len(ordered_df.index))}
 prottoid = {ordered_df.index[n]:n for n in range(len(ordered_df.index))}
 
 """SHUFFLING"""
-for i in range(100):
+for i in range(10000):
     rand_ints = random.sample(range(len(ordered_df.index)), len(ordered_df.index))
     for index, row in stats_df.iterrows():
         # print("----")
@@ -157,5 +157,5 @@ final_df['coph_enrichment'] = final_df.apply(lambda row: row['coph']/row['avg_sh
 final_df['SNR_enrichment'] = final_df.apply(lambda row: row['SNR']/row['avg_shufSNRs'], axis=1)
 final_df = final_df[['proteins', 'coph', 'avg_shufcophs', 'coph_enrichment', 't_coph', 'p_coph', 'SNR', 'avg_shufSNRs', 'SNR_enrichment', 't_snr', 'p_snr']]
 final_df=final_df.sort_values(by='SNR', ascending=False)
-final_df.to_csv('shuffle-STRING-group-stats.tsv', sep='\t', index=False)
-#stats_df.to_csv('extended-shuffle-STRING-group-stats.tsv', sep='\t', index=True)
+final_df.to_csv('med-shuffle-STRING-group-stats.tsv', sep='\t', index=False)
+stats_df.to_csv('med-extended-shuffle-STRING-group-stats.tsv', sep='\t', index=True)

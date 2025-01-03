@@ -10,8 +10,8 @@ from collections import defaultdict
 import os
 import csv
 
-chipdir = '/mnt/altnas/work/Kyle.Knightly/chipseq-analysis/extended-set/chipbin10beds_merged'
-paired_anchors = '/mnt/altnas/work/Kyle.Knightly/chipseq-analysis/restricted-set/paired-anchors/hepg2-loops.bed'
+chipdir = '/mnt/altnas/work/Kyle.Knightly/chipseq-analysis/hepg2/all-chipseq/merged-filtered-tracks'
+paired_anchors = '/mnt/altnas/work/Kyle.Knightly/chipseq-analysis/hepg2/beds/hepg2-loops.bedpe'
 
 def lookup_dic(chipdir):
     interval_origins = defaultdict(list) #the dic
@@ -40,7 +40,7 @@ def find_overlaps(interval, lookup_dict):
 def origin(inbed, outbed, chipdir):
     interval_prots = lookup_dic(chipdir)
     with open(inbed, 'r') as infile, open(outbed, 'w', newline='') as outfile:
-        reader = csv.reader(infile, delimiter=' ')
+        reader = csv.reader(infile, delimiter='\t')
         writer = csv.writer(outfile, delimiter='\t')
         seen = {} #makes this more efficient since often anchors are seen multiple times
         
@@ -67,4 +67,4 @@ def origin(inbed, outbed, chipdir):
 
             
 
-origin(paired_anchors, 'paired-anchor-TFs.bed',chipdir)
+origin(paired_anchors, 'paired-anchor-all-merged-filtered-TFs.bed',chipdir)

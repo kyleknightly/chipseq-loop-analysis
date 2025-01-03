@@ -33,7 +33,7 @@ def contact_matrix(bed_file):
     """
     EDIT STARTING VALUE (+1)
     """
-    contact_matrix = pd.DataFrame(0, index=proteins, columns=proteins)
+    contact_matrix = pd.DataFrame(1, index=proteins, columns=proteins)
 
     # Step 4: Populate the contact map
     for _, row in df.iterrows():
@@ -55,10 +55,10 @@ def contact_matrix(bed_file):
     
     return contact_matrix
 
-file = '/mnt/altnas/work/Kyle.Knightly/chipseq-analysis/extended-set/paired-anchor-TFs.bed'
+file = '/mnt/altnas/work/Kyle.Knightly/chipseq-analysis/hepg2/paired-anchor-TFs.bed'
 contacts = contact_matrix(file)
 
 organized_contacts=organize(contacts)
-#print(organized_enrichments)
+print(organized_enrichments)
 name = os.path.basename(file)
-organized_contacts.to_csv('contacts-' + name, sep='\t', index=True)
+organized_contacts.to_csv('pseudo-cis+trans-contacts.tsv', sep='\t', index=True)

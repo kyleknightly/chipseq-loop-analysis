@@ -14,18 +14,29 @@ import os
 import pickle
 #/mnt/altnas/work/Kyle.Knightly/chipseq-analysis/extended-set/anchor_proportions.pkl
 #
-with open('/mnt/altnas/work/Kyle.Knightly/chipseq-analysis/extended-set/fake-anchors/subdivide/subdivisions-proportions.pkl', 'rb') as pickle_file:
+with open('/mnt/altnas/work/Kyle.Knightly/chipseq-analysis/hepg2/all-chipseq/merged-filtered/all-merged-filtered-loop_end_proportions.pkl', 'rb') as pickle_file:
     proportions = pickle.load(pickle_file)
-
-contact_matrix = "/mnt/altnas/work/Kyle.Knightly/chipseq-analysis/extended-set/fake-anchors/subdivide/pseudo-subdivisions-contacts.tsv"
+spot_check=['NFYA', 'NFYB', 'NFYC']
+# ['NFYA', 'NFYB','NFYC','FOSL1','CTCF','ZNF143']
+# ['ZMYM4', 'ZNF219', 'SALL1', 'GATAD2A', 'ARID5B', 'ARID3A']
+contact_matrix = "/mnt/altnas/work/Kyle.Knightly/chipseq-analysis/hepg2/all-chipseq/merged-filtered/geq10k-pseudo-all-merged-filtered-anchor-contacts.tsv"
 df = pd.read_csv(contact_matrix, sep='\t', header=0, index_col=0).astype(float)
 print(df)
 for row in df.index:
     for col in df.columns:
         if row in proportions and col in proportions:
-            df.loc[row, col] /= (37825 * float(proportions[row]) * float(proportions[col])+1) #37836
+            # for spot in spot_check:
+                # if row==col==spot:
+                #     print(spot)
+                #     print(df.loc[row,col])
+                #     print(float(proportions[row]))
+                #     print(252613 * 2 * float(proportions[row])* float(proportions[col])+1)
+                #     print(df.loc[row,col]/(252613 * 2 * float(proportions[row])* float(proportions[col])+1))
+            df.loc[row, col] /= (107619 * float(proportions[row]) * float(proportions[col])+1) 
+            # df.loc[row, col] /= (252613 * 2 * float(proportions[row]) * float(proportions[col])+1) #LOOP ENDS
+            #df.loc[row, col] /= (107619 * 4.636 * float(proportions[row]) * float(proportions[col])+1) #37836
             #anchors * (loops/anchor + 1(self)) * probability
-print(df)
+# print(df)
 
 name = os.path.basename(contact_matrix)
-df.to_csv('big-span-enrichments-' + name, sep='\t', index=True)
+df.to_csv('enrichments-' + name, sep='\t', index=True)

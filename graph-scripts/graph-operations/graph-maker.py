@@ -14,10 +14,10 @@ import ast
 
 # Define the function to read the BED file and create the graph
 
-bed_file = '/mnt/altnas/work/Kyle.Knightly/anchor-graph/LCL-loops/loopList_CTCF_noCTCF.bedpe'
-df = pd.read_csv(bed_file, sep="\t", header=None, names = ['ch1', 'start1', 'end1', 'ch2', 'start2', 'end2', 'ctcf'])
-# df['prots1'] = df['prots1'].apply(ast.literal_eval)
-# df['prots2'] = df['prots2'].apply(ast.literal_eval)
+bed_file = '/mnt/altnas/work/Kyle.Knightly/chipseq-analysis/hepg2/paired-anchor-TFs.bed'
+df = pd.read_csv(bed_file, sep="\t", header=None, names = ['ch1', 'start1', 'end1', 'prots1', 'ch2', 'start2', 'end2', 'prots2'])
+df['prots1'] = df['prots1'].apply(ast.literal_eval)
+df['prots2'] = df['prots2'].apply(ast.literal_eval)
 print('DF MADE')
 
 
@@ -28,13 +28,13 @@ for _, row in df.iterrows():
     node2 = (row['ch2'], row['start2'], row['end2'])
     
     G.add_node(node1, 
-            #    prots = row['prots1'], 
+               prots = row['prots1'], 
                chr = row['ch1'])
     G.add_node(node2, 
-            #    prots = row['prots2'], 
+               prots = row['prots2'], 
                chr = row['ch2'])
     G.add_edge(node1, node2,
-                # prots = list(set(row['prots1']) | set(row['prots2'])), 
+                prots = list(set(row['prots1']) | set(row['prots2'])), 
                 size = abs(int(row['start2'])-int(row['end1']))
                 )
     #print(abs(int(row['start2'])-int(row['end1'])))
@@ -42,5 +42,5 @@ for _, row in df.iterrows():
 print(f"Number of nodes: {G.number_of_nodes()}")
 print(f"Number of edges: {G.number_of_edges()}")
 
-nx.write_gpickle(G, 'LCL-anchor-graph.gpickle')
+nx.write_gpickle(G, 'hepg2-anchor-graph.gpickle')
 

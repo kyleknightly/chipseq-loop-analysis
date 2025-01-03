@@ -9,9 +9,9 @@ import networkx as nx
 import scipy.stats as stats
 
 # Load the TSV file into a DataFrame
-degree_df = pd.read_csv('/mnt/altnas/work/Kyle.Knightly/anchor-graph/anchor-degrees.bed', sep='\t', names = ['chr', 'start', 'end', 'degree'])
-df = pd.read_csv('/mnt/altnas/work/Kyle.Knightly/anchor-graph/hepg2-anchor-TFs.bed', sep='\t', names=['chr', 'start','end', 'prots'])
-graph = nx.read_gpickle('/mnt/altnas/work/Kyle.Knightly/anchor-graph/anchor-graph.gpickle')
+degree_df = pd.read_csv('/mnt/altnas/work/Kyle.Knightly/anchor-graph/hepg2/hepg2-anchor-degrees.bed', sep='\t', names = ['chr', 'start', 'end', 'degree'])
+df = pd.read_csv('/mnt/altnas/work/Kyle.Knightly/chipseq-analysis/hepg2/beds/anchor-TFs.bed', sep='\t', names=['chr', 'start','end', 'prots'])
+graph = nx.read_gpickle('/mnt/altnas/work/Kyle.Knightly/anchor-graph/hepg2/hepg2-anchor-graph.gpickle')
 
 # Convert the `prots` column from strings to lists using ast.literal_eval
 df['prots'] = df['prots'].apply(ast.literal_eval)
@@ -25,10 +25,16 @@ all_degrees= [degrees[node] for node in graph.nodes()]
 
 # Create a dictionary to store the degrees for each protein
 protein_degrees = {}
+protein_degrees['none']=[]
+protein_degrees['any']=[]
 
 # Iterate through each row in the DataFrame
 for index, row in merged_df.iterrows():
     degree = row['degree']
+    if row['prots']==[]:
+        protein_degrees['none'].append(degree)
+    else:
+        protein_degrees['any'].append(degree)
     for protein in row['prots']:
         if protein not in protein_degrees:
             protein_degrees[protein] = []
@@ -68,7 +74,7 @@ final_df = pd.DataFrame({
     't_stat': t_stats,
     'p_value': p_values
 })
-final_df= final_df.sort_values(by='p_value')
+final_df= final_df.sort_values(by='avg_degree')
 # Display the DataFrame
 print(final_df)
 final_df.to_csv('protein-degree-tests.tsv', sep='\t', index=False)

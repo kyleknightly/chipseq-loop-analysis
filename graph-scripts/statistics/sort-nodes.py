@@ -6,7 +6,7 @@ import networkx as nx
 import pandas as pd
 
 # Load the graph from a pickle file
-graph = nx.read_gpickle('/mnt/altnas/work/Kyle.Knightly/anchor-graph/anchor-graph.gpickle')
+graph = nx.read_gpickle('/mnt/altnas/work/Kyle.Knightly/anchor-graph/hepg2/hepg2-anchor-graph.gpickle')
 
 # Calculate the degree of each node
 degrees = dict(graph.degree())
@@ -21,4 +21,4 @@ for node in graph.nodes():
 df = pd.DataFrame(data)
 
 # Save to TSV file
-df.to_csv('anchor-degrees.bed', sep='\t', index=False, header=False)
+df.to_csv('hepg2-anchor-degrees.bed', sep='\t', index=False, header=False)

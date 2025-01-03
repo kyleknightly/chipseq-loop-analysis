@@ -6,7 +6,7 @@ This takes an anchor-TFs file and creates a contact matrix
 import pandas as pd
 import ast
 
-file = '/mnt/altnas/work/Kyle.Knightly/chipseq-analysis/extended-set/fake-anchors/subdivide/subdivisions-TFs.bed'
+file = '/mnt/altnas/work/Kyle.Knightly/chipseq-analysis/hepg2/all-chipseq/merged-filtered/anchor-all-merged-filtered-TFs.bed'
 
 df = pd.read_csv(file, sep='\t', names = ['chr', 'start','end','prots'])
 
@@ -17,6 +17,7 @@ for prots in df['prots']:
     all_proteins.update(prots)
 
 all_proteins = sorted(all_proteins)
+print('sorted')
 
 # Create an interaction matrix
 matrix = pd.DataFrame(1, index=all_proteins, columns=all_proteins)
@@ -31,4 +32,4 @@ for prots in df['prots']:
             matrix.at[protein2, protein1] += 1
 
 print(matrix)  
-matrix.to_csv('pseudo-subdivisions-contacts.tsv', sep='\t', index=True)
+matrix.to_csv('pseudo-all-merged-filtered-anchor-contacts.tsv', sep='\t', index=True)

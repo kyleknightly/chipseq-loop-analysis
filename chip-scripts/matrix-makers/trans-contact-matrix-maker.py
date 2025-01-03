@@ -27,8 +27,8 @@ def contact_matrix(bed_file):
     print('DF MADE')
     
     proteins = set(df['prots1'].explode()).union(set(df['prots2'].explode()))
-    
-    #Initialize contact_matrix with a 1 in each (for analysis reasons)
+    proteins = sorted(proteins)
+    #Initialize contact_matrix with a 1 in each
     """
     EDIT STARTING VALUE (+1)
     """
@@ -54,10 +54,10 @@ def contact_matrix(bed_file):
     
     return contact_matrix
 
-file = '/mnt/altnas/work/Kyle.Knightly/chipseq-analysis/extended-set/loop-scrambling/2scrambled-paired-anchor-TFs.bedpe'
+file = '/mnt/altnas/work/Kyle.Knightly/chipseq-analysis/hepg2/all-chipseq/merged-filtered/paired-anchor-all-merged-filtered-TFs.bed'
 contacts = contact_matrix(file)
 
 organized_contacts=organize(contacts)
 #print(organized_enrichments)
 name = os.path.basename(file)
-organized_contacts.to_csv('pseudo-trans-contacts-' + name, sep='\t', index=True)
+organized_contacts.to_csv('all-merged-filtered-pseudo-trans-contacts.tsv', sep='\t', index=True)

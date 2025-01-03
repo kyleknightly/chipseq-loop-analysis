@@ -8,10 +8,10 @@ import pandas as pd
 import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
-from scipy.cluster.hierarchy import linkage, dendrogram, leaves_list
+from scipy.cluster.hierarchy import linkage, dendrogram, leaves_list, optimal_leaf_ordering
 import os
 
-file_path = '/mnt/altnas/work/Kyle.Knightly/chipseq-analysis/extended-set/loop-ends/trans-probability-matrix.tsv'
+file_path = '/mnt/altnas/work/Kyle.Knightly/geq10k-pseudo-trans-contacts.tsv'
 df = pd.read_csv(file_path, sep='\t', index_col=0)
 max = df.max().max()
 
@@ -22,17 +22,20 @@ vmax = df.max().max()
 print(f"vmin: {vmin}, vmax: {vmax}")
 
 linkage_matrix = linkage(df, method='ward')
+# Apply Optimal Leaf Ordering to the linkage matrix
+linkage_matrix_olo = optimal_leaf_ordering(linkage_matrix, df)
 
-ordered_index = leaves_list(linkage_matrix)
-
+# Get the ordered indices after optimal leaf ordering
+ordered_index = leaves_list(linkage_matrix_olo)
 # ordered_protein_names = log10_enrichment_df.index[ordered_index].tolist()
 # print(ordered_protein_names)
 
 ordered_df = df.iloc[ordered_index, ordered_index]
+# print(ordered_df.index[ordered_index].tolist())
 
 fig, (ax_dendro, ax_heatmap) = plt.subplots(1, 2, figsize=(70, 50), gridspec_kw={'width_ratios': [1, 15]})
 
-dendro = dendrogram(linkage_matrix, labels=ordered_df.index, orientation='left', ax=ax_dendro)
+dendro = dendrogram(linkage_matrix_olo, labels=ordered_df.index, orientation='left', ax=ax_dendro)
 ax_dendro.invert_yaxis()  # Reverse the y-axis to make the dendrogram go from top to bottom
 ax_dendro.set_xticks([])
 ax_dendro.set_yticks([])
@@ -66,6 +69,7 @@ for label in ax_heatmap.get_yticklabels():
 # Stagger the y-tick labels
 yticks = np.arange(len(ordered_df.index)) + 0.5
 yticklabels = ordered_df.index
+print(ordered_df.index.tolist())
 for i, label in enumerate(ax_heatmap.get_yticklabels()):
     if i % 2 == 0:
         label.set_x(-0.0005)  # Shift to the left
@@ -99,4 +103,4 @@ plt.subplots_adjust(wspace=0.05)
 # plt.xlabel('Transcription Factors')
 # plt.ylabel('Transcription Factors')
 name = os.path.basename(file_path)
-plt.savefig('ward-' + name[:-3] + 'png', dpi=300, bbox_inches='tight')
+plt.savefig('olo-'+name[:-3] + 'png', dpi=300, bbox_inches='tight')
