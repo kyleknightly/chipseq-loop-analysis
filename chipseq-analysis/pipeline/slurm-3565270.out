@@ -1,0 +1,6 @@
+paired-anchor-TFs created
+proportions created
+Traceback (most recent call last):
+  File "/mnt/altnas/work/Kyle.Knightly/chipseq-analysis/chip-scripts/pipeline.py", line 78, in <module>
+    proteins=sorted(proteins)
+TypeError: '<' not supported between instances of 'str' and 'float'

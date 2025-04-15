@@ -1,0 +1,16 @@
+"https://www.encodeproject.org/metadata/?replicates.library.biosample.donor.organism.scientific_name=Homo+sapiens&assay_title=Histone+ChIP-seq&assay_title=Mint-ChIP-seq&status=released&biosample_ontology.term_name=HepG2&assembly=GRCh38&files.file_type=bed+narrowPeak&type=Experiment&files.analyses.status=released&files.preferred_default=true"
+https://www.encodeproject.org/files/ENCFF535ULI/@@download/ENCFF535ULI.bed.gz
+https://www.encodeproject.org/files/ENCFF924TKB/@@download/ENCFF924TKB.bed.gz
+https://www.encodeproject.org/files/ENCFF044QMC/@@download/ENCFF044QMC.bed.gz
+https://www.encodeproject.org/files/ENCFF372HCL/@@download/ENCFF372HCL.bed.gz
+https://www.encodeproject.org/files/ENCFF549DKP/@@download/ENCFF549DKP.bed.gz
+https://www.encodeproject.org/files/ENCFF841QVP/@@download/ENCFF841QVP.bed.gz
+https://www.encodeproject.org/files/ENCFF637QOV/@@download/ENCFF637QOV.bed.gz
+https://www.encodeproject.org/files/ENCFF946FQI/@@download/ENCFF946FQI.bed.gz
+https://www.encodeproject.org/files/ENCFF489ZNJ/@@download/ENCFF489ZNJ.bed.gz
+https://www.encodeproject.org/files/ENCFF303VCJ/@@download/ENCFF303VCJ.bed.gz
+https://www.encodeproject.org/files/ENCFF811ZMQ/@@download/ENCFF811ZMQ.bed.gz
+https://www.encodeproject.org/files/ENCFF500KVU/@@download/ENCFF500KVU.bed.gz
+https://www.encodeproject.org/files/ENCFF413EGR/@@download/ENCFF413EGR.bed.gz
+https://www.encodeproject.org/files/ENCFF392KDI/@@download/ENCFF392KDI.bed.gz
+https://www.encodeproject.org/files/ENCFF982DUT/@@download/ENCFF982DUT.bed.gz

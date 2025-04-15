@@ -1,0 +1,8 @@
+paired-anchor-TFs created
+proportions created
+cis_matrix created
+trans_matrix created
+Traceback (most recent call last):
+  File "/mnt/altnas/work/Kyle.Knightly/chipseq-analysis/chip-scripts/pipeline.py", line 162, in <module>
+    linkage_matrix_olo = optimal_leaf_ordering(linkage_matrix, enrichment_df)
+NameError: name 'optimal_leaf_ordering' is not defined
