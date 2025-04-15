@@ -1,9 +1,0 @@
-paired-anchor-TFs created
-proportions created
-cis_matrix created
-Traceback (most recent call last):
-  File "/mnt/altnas/work/Kyle.Knightly/chipseq-analysis/chip-scripts/pipeline.py", line 94, in <module>
-    trans_matrix = pd.DataFrame(1, index=proteins, columns=proteins)
-  File "/gpfs0/apps/ppc64le/anaconda3/lib/python3.10/site-packages/pandas/core/frame.py", line 742, in __init__
-    raise ValueError("index cannot be a set")
-ValueError: index cannot be a set

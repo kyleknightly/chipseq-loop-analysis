@@ -1,8 +1,0 @@
-paired-anchor-TFs created
-proportions created
-cis_matrix created
-trans_matrix created
-Traceback (most recent call last):
-  File "/mnt/altnas/work/Kyle.Knightly/chipseq-analysis/chip-scripts/pipeline.py", line 154, in <module>
-    log10_enrichment_df = np.log10(enrichment_df.replace(0, 10 ** (-np.log10(max))))
-NameError: name 'np' is not defined
