@@ -14,8 +14,16 @@ import matplotlib.pyplot as plt
 from scipy.cluster.hierarchy import linkage, dendrogram, leaves_list, optimal_leaf_ordering
 import os
 
-enrichment_file_path = '/mnt/altnas/work/Kyle.Knightly/chipseq-analysis/hepg2/all-chipseq/merged-filtered/enrichments-geq10k-pseudo-all-merged-filtered-anchor-contacts.tsv'
+enrichment_file_path = '/mnt/altnas/work/Kyle.Knightly/chipseq-analysis/hepg2/PrePPI/preppi-matrix.tsv'
 enrichment_df = pd.read_csv(enrichment_file_path, sep='\t', index_col=0)
+
+# OPTIONAL RESTRICT SET
+subset = ['ZNF547', 'MXD4', 'ZNF563', 'FOXC1', 'ZNF407', 'NRL', 'NFKB2', 'ZNF430', 'GLYR1', 'TAF15', 'BORCS8', 'KDM5B', 'SALL2', 'ARNT2', 'POGK', 'ZNF605', 'ZNF350', 'SFPQ', 'ZNF580', 'ZBTB25', 'ZSCAN31', 'ZNF772', 'ZNF221', 'BAZ2A', 'ZNF556', 'HOXA5', 'HOXA10', 'ZNF792', 'ERF', 'KLF16', 'MEF2D', 'SMAD3', 'MIER3', 'ZNF614', 'IKZF5', 'ZNF331', 'RBPJ', 'FOXK1', 'ZGPAT', 'MYPOP', 'HDAC1', 'ASH2L', 'TARDBP', 'IRF2', 'REPIN1', 'KDM3A', 'E2F8', 'ZNF788', 'ZNF48', 'MNX1', 'CCDC6', 'ATF7', 'DRAP1', 'SMAD7', 'ZNF501', 'NONO', 'HOXA3', 'POU2F1', 'TAF1', 'POLR2A', 'ZFP91', 'TFDP1', 'MYC', 'KMT2B', 'KMT2A', 'AGO2', 'MAZ', 'RBM39', 'TFDP2', 'SP4', 'MXI1', 'YEATS2', 'THAP9', 'SIN3A', 'DMAP1', 'YEATS4', 'SPEN', 'SAP130', 'EGR1', 'ZFX', 'RBFOX2', 'NR2C2', 'CREB1', 'LIN54', 'ELF1', 'THAP11', 'GATAD1', 'PHF20', 'ZNF574', 'KDM2A', 'ARID4B', 'ZFY', 'POLR2G', 'PHF8', 'KAT8', 'E2F4', 'YY1', 'ARID4A', 'GMEB1', 'GABPA', 'GABPB1', 'NRF1', 'PATZ1', 'MAX', 'MGA', 'UBTF', 'USF1', 'ZNF687', 'HNRNPLL', 'HMGXB4', 'XRCC5','ZNF710', 'MIXL1', 'ZNF217', 'KDM1A', 'LCOR', 'ZNF219', 'HDAC2', 'PITX1', 'MED1', 'HOMEZ', 'RXRA', 'TFAP4', 'ZMYM4', 'POGZ', 'ZBTB7B', 'LCORL', 'PHF21A', 'HNF1B', 'ETV4', 'ATF2', 'TBX2', 'ELF3', 'MYBL2', 'SALL1', 'ETV5', 'SP1', 'CREM', 'SKI', 'HNF4G', 'RXRB', 'SMAD4', 'PAXIP1', 'NFIL3', 'TEAD1', 'TEAD4', 'CEBPG', 'NR2F6', 'HNF4A', 'CEBPB', 'JUND', 'TEAD3', 'ISL2', 'FOXJ3', 'FOXP4', 'ZNF609', 'GATAD2A', 'NCOR1', 'PROX1', 'FOXO1', 'HNF1A', 'ARID3A', 'HMG20A', 'AHDC1', 'NCOA2', 'EP300', 'FOXP1', 'ARID5B', 'TCF7L2', 'SOX5', 'SOX13', 'FOXA3', 'SOX6', 'RARA', 'BCL6', 'FOXA2', 'FOXA1', 'CEBPA', 'FOSL2','SMC3', 'STAG1', 'RAD21', 'CTCF']
+enrichment_df = enrichment_df.loc[
+    enrichment_df.index.intersection(subset),
+    enrichment_df.columns.intersection(subset)
+]
+
 max = enrichment_df.max().max()
 #log, replace 0 with a 1x-10
 log10_enrichment_df = np.log10(enrichment_df.replace(0, 10 ** (-np.log10(max))))
@@ -129,4 +137,4 @@ plt.subplots_adjust(wspace=0.07)
 # plt.xlabel('Transcription Factors')
 # plt.ylabel('Transcription Factors')
 name = os.path.basename(enrichment_file_path)
-plt.savefig('olo-log10' + name[:-3] + 'png', dpi=300, bbox_inches='tight')
+plt.savefig('subset-'+name[:-3] + 'png', dpi=300, bbox_inches='tight')

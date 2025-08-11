@@ -11,9 +11,11 @@ import matplotlib.pyplot as plt
 from scipy.cluster.hierarchy import linkage, dendrogram, leaves_list, optimal_leaf_ordering
 import os
 
-file_path = '/mnt/altnas/work/Kyle.Knightly/geq10k-pseudo-trans-contacts.tsv'
+file_path = '/mnt/altnas/work/Kyle.Knightly/chipseq-analysis/hepg2/correlation-matrix.tsv'
 df = pd.read_csv(file_path, sep='\t', index_col=0)
 max = df.max().max()
+# print("NaNs:\n", df[df.isna().any(axis=1)])
+df.fillna(0, inplace=True)
 
 #calc vmin vmax values
 vmin = df.min().min()
@@ -103,4 +105,4 @@ plt.subplots_adjust(wspace=0.05)
 # plt.xlabel('Transcription Factors')
 # plt.ylabel('Transcription Factors')
 name = os.path.basename(file_path)
-plt.savefig('olo-'+name[:-3] + 'png', dpi=300, bbox_inches='tight')
+plt.savefig(name[:-3] + 'png', dpi=300, bbox_inches='tight')

@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # Set the directory containing the BED files
-BED_DIR="/mnt/altnas/work/Kyle.Knightly/chipseq-analysis/hepg2/all-chipseq/filtered-tracks"
+BED_DIR="/mnt/altnas/work/Kyle.Knightly/chipseq-analysis/hepg2/all-chipseq/new-filtered"
 
 # Set the directory to store the output files
-OUTPUT_DIR="/mnt/altnas/work/Kyle.Knightly/chipseq-analysis/hepg2/all-chipseq/inter-filtered-tracks"
+OUTPUT_DIR="/mnt/altnas/work/Kyle.Knightly/chipseq-analysis/hepg2/all-chipseq/new-merged-filtered"
 
 # Create the output directory if it doesn't exist
 mkdir -p "$OUTPUT_DIR"

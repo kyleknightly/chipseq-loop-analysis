@@ -6,7 +6,7 @@ import os
 import numpy as np
 
 chipdir = '/mnt/altnas/work/Kyle.Knightly/chipseq-analysis/hepg2/all-chipseq/chip-tracks'
-outdir = '/mnt/altnas/work/Kyle.Knightly/chipseq-analysis/hepg2/all-chipseq/filtered-tracks'
+outdir = '/mnt/altnas/work/Kyle.Knightly/chipseq-analysis/hepg2/all-chipseq/new-filtered-tracks'
 
 # Ensure the output directory exists (create if it doesn't)
 os.makedirs(outdir, exist_ok=True)
@@ -30,9 +30,12 @@ for filename in os.listdir(chipdir):
             
             parts = line.strip().split('\t')
             # The "score" in narrowPeak is column index 4 (5th column)
+            print(parts[6])
             try:
-                score = float(parts[4])
+                score = float(parts[6])
+                print(score)
             except ValueError:
+                print('failed')
                 # If we fail to parse the score, just skip this line
                 continue
 
