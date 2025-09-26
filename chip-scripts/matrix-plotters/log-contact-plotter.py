@@ -14,15 +14,15 @@ import matplotlib.pyplot as plt
 from scipy.cluster.hierarchy import linkage, dendrogram, leaves_list, optimal_leaf_ordering
 import os
 
-enrichment_file_path = '/mnt/altnas/work/Kyle.Knightly/chipseq-analysis/hepg2/PrePPI/preppi-matrix.tsv'
+enrichment_file_path = '/mnt/altnas/work/Kyle.Knightly/looppi/no-empty-out/trans_enrichment_matrix.tsv'
 enrichment_df = pd.read_csv(enrichment_file_path, sep='\t', index_col=0)
 
 # OPTIONAL RESTRICT SET
-subset = ['ZNF547', 'MXD4', 'ZNF563', 'FOXC1', 'ZNF407', 'NRL', 'NFKB2', 'ZNF430', 'GLYR1', 'TAF15', 'BORCS8', 'KDM5B', 'SALL2', 'ARNT2', 'POGK', 'ZNF605', 'ZNF350', 'SFPQ', 'ZNF580', 'ZBTB25', 'ZSCAN31', 'ZNF772', 'ZNF221', 'BAZ2A', 'ZNF556', 'HOXA5', 'HOXA10', 'ZNF792', 'ERF', 'KLF16', 'MEF2D', 'SMAD3', 'MIER3', 'ZNF614', 'IKZF5', 'ZNF331', 'RBPJ', 'FOXK1', 'ZGPAT', 'MYPOP', 'HDAC1', 'ASH2L', 'TARDBP', 'IRF2', 'REPIN1', 'KDM3A', 'E2F8', 'ZNF788', 'ZNF48', 'MNX1', 'CCDC6', 'ATF7', 'DRAP1', 'SMAD7', 'ZNF501', 'NONO', 'HOXA3', 'POU2F1', 'TAF1', 'POLR2A', 'ZFP91', 'TFDP1', 'MYC', 'KMT2B', 'KMT2A', 'AGO2', 'MAZ', 'RBM39', 'TFDP2', 'SP4', 'MXI1', 'YEATS2', 'THAP9', 'SIN3A', 'DMAP1', 'YEATS4', 'SPEN', 'SAP130', 'EGR1', 'ZFX', 'RBFOX2', 'NR2C2', 'CREB1', 'LIN54', 'ELF1', 'THAP11', 'GATAD1', 'PHF20', 'ZNF574', 'KDM2A', 'ARID4B', 'ZFY', 'POLR2G', 'PHF8', 'KAT8', 'E2F4', 'YY1', 'ARID4A', 'GMEB1', 'GABPA', 'GABPB1', 'NRF1', 'PATZ1', 'MAX', 'MGA', 'UBTF', 'USF1', 'ZNF687', 'HNRNPLL', 'HMGXB4', 'XRCC5','ZNF710', 'MIXL1', 'ZNF217', 'KDM1A', 'LCOR', 'ZNF219', 'HDAC2', 'PITX1', 'MED1', 'HOMEZ', 'RXRA', 'TFAP4', 'ZMYM4', 'POGZ', 'ZBTB7B', 'LCORL', 'PHF21A', 'HNF1B', 'ETV4', 'ATF2', 'TBX2', 'ELF3', 'MYBL2', 'SALL1', 'ETV5', 'SP1', 'CREM', 'SKI', 'HNF4G', 'RXRB', 'SMAD4', 'PAXIP1', 'NFIL3', 'TEAD1', 'TEAD4', 'CEBPG', 'NR2F6', 'HNF4A', 'CEBPB', 'JUND', 'TEAD3', 'ISL2', 'FOXJ3', 'FOXP4', 'ZNF609', 'GATAD2A', 'NCOR1', 'PROX1', 'FOXO1', 'HNF1A', 'ARID3A', 'HMG20A', 'AHDC1', 'NCOA2', 'EP300', 'FOXP1', 'ARID5B', 'TCF7L2', 'SOX5', 'SOX13', 'FOXA3', 'SOX6', 'RARA', 'BCL6', 'FOXA2', 'FOXA1', 'CEBPA', 'FOSL2','SMC3', 'STAG1', 'RAD21', 'CTCF']
-enrichment_df = enrichment_df.loc[
-    enrichment_df.index.intersection(subset),
-    enrichment_df.columns.intersection(subset)
-]
+# subset = ['STAG1', 'SMC3', 'RAD21', 'CTCF', 'ZNF710', 'DLX6', 'RCOR2', 'MED1', 'ZNF503', 'HOMEZ', 'RREB1', 'HNF4G', 'SKI', 'THRA', 'ZNF217', 'KDM1A', 'LCOR', 'ZNF219', 'RXRB', 'JUN', 'MIXL1', 'HDAC2', 'PITX1', 'ZNF292', 'RXRA', 'POGZ', 'ZMYM4', 'TFAP4', 'TEAD3', 'JUND', 'CEBPB', 'HNF4A', 'NR2F6', 'TEAD4', 'CEBPG', 'NFIL3', 'TEAD1', 'PAXIP1', 'SMAD4', 'FOSL2', 'CEBPA', 'FOXA1', 'FOXA2', 'RARA', 'SOX6', 'FOXA3', 'TCF7L2', 'ARID5B', 'SOX5', 'SOX13', 'FOXP1', 'BCL6', 'PROX1', 'FOXP4', 'ZNF609', 'PPARG', 'FOXO1', 'HNF1A', 'GATAD2A', 'NCOR1', 'GFI1', 'ARID3A', 'FOXJ3', 'ISL2', 'EP300', 'NCOA2', 'AHDC1', 'HMG20A', 'NFIC', 'HLF', 'H2AFZ', 'XRCC5', 'GABPA', 'GABPB1', 'NRF1', 'HMGXB4', 'HNRNPLL', 'ZNF687', 'USF1', 'MAX', 'MGA', 'UBTF', 'SAP130', 'EGR1', 'RBFOX2', 'ZFX', 'NR2C2', 'CREB1', 'PATZ1', 'ZNF574', 'THAP11', 'GATAD1', 'PHF20', 'ELF1', 'LIN54', 'NFYA', 'NFYB', 'DRAP1', 'SMAD7', 'ZNF501', 'HOXA3', 'POU2F1', 'NONO', 'TAF1', 'KMT2B', 'KMT2A', 'MYPOP', 'TFDP1', 'ZFP91', 'POLR2A', 'ARID4B', 'ZFY', 'POLR2G', 'PHF8', 'E2F4', 'KAT8', 'GMEB1', 'ARID4A', 'YY1', 'KDM2A', 'AGO2', 'SPEN', 'YEATS4', 'DMAP1', 'SIN3A', 'THAP9', 'YEATS2', 'MAZ', 'RBM39', 'TFDP2', 'SP4', 'MXI1', 'MYC', 'KDM3A', 'REPIN1', 'ATF7', 'MNX1', 'CCDC6', 'ZNF48', 'ZNF788', 'E2F8', 'KLF16', 'ERF', 'MBD1', 'CBFB', 'IKZF5', 'ZNF614', 'MIER3', 'SMAD3', 'MEF2D', 'GATAD2B', 'MEIS2', 'ZNF331', 'RBPJ', 'FOXK1', 'ZGPAT', 'SP5', 'CBX5', 'TARDBP', 'IRF2', 'HDAC1', 'ASH2L', 'ZBTB7B', 'LCORL', 'PHF21A', 'HNF1B', 'ELF3', 'TBX2', 'ETV4', 'ATF2', 'TFE3', 'SALL1', 'ETV5', 'SP1', 'MYBL2', 'CREM', 'TBP', 'MXD1', 'ZHX2', 'RFXAP', 'ZSCAN31', 'ZNF772', 'ZNF221', 'ZNF607', 'SALL2', 'ARNT2', 'KDM5B', 'BORCS8', 'TAF15', 'GLYR1', 'POGK', 'ZNF605', 'ZNF350', 'SFPQ', 'ZBTB25', 'ZNF580', 'ZNF691', 'ZBTB38', 'BAZ2A', 'ZNF556', 'ZNF414', 'HOXA5', 'ZNF511', 'ZNF792', 'MEIS1', 'HOXA10', 'MTA1', 'ZSCAN9', 'ZNF280D', 'BRD4', 'KLF12', 'MXD4', 'NRL', 'KAT7', 'ZNF747', 'ZMAT3', 'ZSCAN21', 'ZNF563', 'FOXC1', 'ZNF407', 'ZNF891', 'NFKB2', 'ZNF709', 'ZNF430', 'ZNF598', 'ZNF230', 'ZNF547', 'ZNF274', 'IRF9', 'ZNF543', 'CSRNP1', 'KLF6', 'ZFP90', 'BCL3', 'ZNF483', 'ZNF883']
+# enrichment_df = enrichment_df.loc[
+#     enrichment_df.index.intersection(subset),
+#     enrichment_df.columns.intersection(subset)
+# ]
 
 max = enrichment_df.max().max()
 #log, replace 0 with a 1x-10
@@ -40,7 +40,7 @@ print(len(log10_enrichment_df.columns.tolist()))
 
 print(f"vmin: {vmin}, vmax: {vmax}")
 
-linkage_matrix = linkage(enrichment_df, method='ward')
+linkage_matrix = linkage(enrichment_df, method='centroid')
 
 # Apply Optimal Leaf Ordering to the linkage matrix
 linkage_matrix_olo = optimal_leaf_ordering(linkage_matrix, enrichment_df)
@@ -120,21 +120,21 @@ colorbar.ax.tick_params(labelsize=30)
 log_ticks = colorbar.get_ticks()
 
 # Convert log10 ticks back to the original scale
-true_ticks = [10 ** tick for tick in log_ticks]
+# true_ticks = [10 ** tick for tick in log_ticks]
 
-# Format the tick labels
-# For values >= 1, display as integers; for small values, use scientific notation
-formatted_ticks = [
-    f"{t:.2e}" if t < 1 else f"{int(t):,}" for t in true_ticks
-]
+# # Format the tick labels
+# # For values >= 1, display as integers; for small values, use scientific notation
+# formatted_ticks = [
+#     f"{t:.2e}" if t < 1 else f"{int(t):,}" for t in true_ticks
+# ]
 
 # Update colorbar with formatted labels
 colorbar.set_ticks(log_ticks)
-colorbar.set_ticklabels(formatted_ticks)# Format as integers with commas
+# colorbar.set_ticklabels(formatted_ticks)# Format as integers with commas
 
 plt.subplots_adjust(wspace=0.07)
 # plt.suptitle('Enrichment Heatmap of TF Overlaps with Clustering (Log10 Scale)')
 # plt.xlabel('Transcription Factors')
 # plt.ylabel('Transcription Factors')
 name = os.path.basename(enrichment_file_path)
-plt.savefig('subset-'+name[:-3] + 'png', dpi=300, bbox_inches='tight')
+plt.savefig('no-empty-' + name[:-3] + 'png', dpi=300, bbox_inches='tight')

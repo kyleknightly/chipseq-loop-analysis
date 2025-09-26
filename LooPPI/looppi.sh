@@ -14,8 +14,8 @@
 set -euo pipefail
 
 # ---- Defaults ----
-DEFAULT_LOOPS="/mnt/altnas/work/Kyle.Knightly/looppi/random-hepg2/random-hepg2-loops.bedpe"
-DEFAULT_PROT_DIR="/mnt/altnas/work/Kyle.Knightly/chipseq-analysis/hepg2/all-chipseq/new-merged-filtered"
+DEFAULT_LOOPS="/mnt/altnas/work/Kyle.Knightly/looppi/old-looppi/rand-3/rand-3.bedpe"
+DEFAULT_PROT_DIR="/mnt/altnas/work/Kyle.Knightly/chipseq-analysis/hepg2/all-chipseq/inter-filtered"
 DEFAULT_OUTDIR="./out"
 DEFAULT_THREADS=1
 

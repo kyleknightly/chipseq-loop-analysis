@@ -11,11 +11,6 @@ from matplotlib.colors import LinearSegmentedColormap
 from scipy.cluster.hierarchy import linkage, dendrogram, leaves_list, optimal_leaf_ordering
 
 # Define custom colormap
-cmap_red_white_blue = LinearSegmentedColormap.from_list(
-    'RedWhiteBlue', 
-    [(0, 0, 1), (1, 1, 1), (1, 0, 0)],  # red → white → blue
-    N=256
-)
 
 def load_proportions(path):
     """Load TF proportions and total count"""
@@ -86,7 +81,7 @@ def plot_enrichment_heatmap(name, enrichment_df, distance_file=None):
     # Plot heatmap
     heatmap = sns.heatmap(
         ordered_log10_enrichment_df, 
-        cmap=cmap_red_white_blue,
+        cmap='RdBu_r',
         annot=False,      
         linewidths=0.05,   
         center=0,  
@@ -172,7 +167,7 @@ def main():
     'H3K79me2', 'POLR2AphosphoS5'
     ]
     # File paths
-    head = '/mnt/altnas/work/Kyle.Knightly/looppi/hepg2/'
+    head = '/mnt/altnas/work/Kyle.Knightly/looppi/old-looppi/rand-1/out/'
     anchor_props_file = head+'04_tf_props.unique.tsv'
     end_props_file = head+'05_tf_props.weightedEnds.tsv'
     cis_counts_file = head+'06_cis_pairs.long.tsv'

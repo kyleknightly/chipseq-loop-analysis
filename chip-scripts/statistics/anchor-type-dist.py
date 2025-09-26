@@ -21,11 +21,11 @@ anchortypes_df = anchortypes_df.sort_values(by=["chrom", "start", "end"]).reset_
 anchortypes_df["coord_key"] = anchortypes_df["chrom"] + "_" + anchortypes_df["start"].astype(str) + "_" + anchortypes_df["end"].astype(str)
 
 # Load anchors.map and join to get anchor_id
-anchor_map_df = pd.read_csv("/mnt/altnas/work/Kyle.Knightly/looppi/hepg2/anchors.map", sep="\t", names=["coord_key", "anchor_id"])
+anchor_map_df = pd.read_csv("/mnt/altnas/work/Kyle.Knightly/looppi/old-looppi/hepg2/anchors.map", sep="\t", names=["coord_key", "anchor_id"])
 anchor_type_df = anchortypes_df.merge(anchor_map_df, on="coord_key", how="inner")
 
 # Load TF–anchor mapping
-anchor_tf_hits_df = pd.read_csv("/mnt/altnas/work/Kyle.Knightly/looppi/hepg2/02_anchor_tf_hits.unique.tsv", sep="\t", names=["anchor_id", "TF"])
+anchor_tf_hits_df = pd.read_csv("/mnt/altnas/work/Kyle.Knightly/looppi/old-looppi/hepg2/02_anchor_tf_hits.unique.tsv", sep="\t", names=["anchor_id", "TF"])
 
 # Merge TFs with anchor types
 merged = anchor_type_df.merge(anchor_tf_hits_df, on="anchor_id", how="inner")
@@ -68,8 +68,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # Define your protein order list
-protein_order = ['STAG1', 'SMC3', 'RAD21', 'CTCF', 'ZNF710', 'DLX6', 'RCOR2', 'MED1', 'ZNF503', 'HOMEZ', 'RREB1', 'HNF4G', 'SKI', 'THRA', 'ZNF217', 'KDM1A', 'LCOR', 'ZNF219', 'RXRB', 'JUN', 'MIXL1', 'HDAC2', 'PITX1', 'ZNF292', 'RXRA', 'POGZ', 'ZMYM4', 'TFAP4', 'TEAD3', 'JUND', 'CEBPB', 'HNF4A', 'NR2F6', 'TEAD4', 'CEBPG', 'NFIL3', 'TEAD1', 'PAXIP1', 'SMAD4', 'FOSL2', 'CEBPA', 'FOXA1', 'FOXA2', 'RARA', 'SOX6', 'FOXA3', 'TCF7L2', 'ARID5B', 'SOX5', 'SOX13', 'FOXP1', 'BCL6', 'PROX1', 'FOXP4', 'ZNF609', 'PPARG', 'FOXO1', 'HNF1A', 'GATAD2A', 'NCOR1', 'GFI1', 'ARID3A', 'FOXJ3', 'ISL2', 'EP300', 'NCOA2', 'AHDC1', 'HMG20A', 'NFIC', 'HLF', 'H2AFZ', 'XRCC5', 'GABPA', 'GABPB1', 'NRF1', 'HMGXB4', 'HNRNPLL', 'ZNF687', 'USF1', 'MAX', 'MGA', 'UBTF', 'SAP130', 'EGR1', 'RBFOX2', 'ZFX', 'NR2C2', 'CREB1', 'PATZ1', 'ZNF574', 'THAP11', 'GATAD1', 'PHF20', 'ELF1', 'LIN54', 'NFYA', 'NFYB', 'DRAP1', 'SMAD7', 'ZNF501', 'HOXA3', 'POU2F1', 'NONO', 'TAF1', 'KMT2B', 'KMT2A', 'MYPOP', 'TFDP1', 'ZFP91', 'POLR2A', 'ARID4B', 'ZFY', 'POLR2G', 'PHF8', 'E2F4', 'KAT8', 'GMEB1', 'ARID4A', 'YY1', 'KDM2A', 'AGO2', 'SPEN', 'YEATS4', 'DMAP1', 'SIN3A', 'THAP9', 'YEATS2', 'MAZ', 'RBM39', 'TFDP2', 'SP4', 'MXI1', 'MYC', 'KDM3A', 'REPIN1', 'ATF7', 'MNX1', 'CCDC6', 'ZNF48', 'ZNF788', 'E2F8', 'KLF16', 'ERF', 'MBD1', 'CBFB', 'IKZF5', 'ZNF614', 'MIER3', 'SMAD3', 'MEF2D', 'GATAD2B', 'MEIS2', 'ZNF331', 'RBPJ', 'FOXK1', 'ZGPAT', 'SP5', 'CBX5', 'TARDBP', 'IRF2', 'HDAC1', 'ASH2L', 'ZBTB7B', 'LCORL', 'PHF21A', 'HNF1B', 'ELF3', 'TBX2', 'ETV4', 'ATF2', 'TFE3', 'SALL1', 'ETV5', 'SP1', 'MYBL2', 'CREM', 'TBP', 'MXD1', 'ZHX2', 'RFXAP', 'ZSCAN31', 'ZNF772', 'ZNF221', 'ZNF607', 'SALL2', 'ARNT2', 'KDM5B', 'BORCS8', 'TAF15', 'GLYR1', 'POGK', 'ZNF605', 'ZNF350', 'SFPQ', 'ZBTB25', 'ZNF580', 'ZNF691', 'ZBTB38', 'BAZ2A', 'ZNF556', 'ZNF414', 'HOXA5', 'ZNF511', 'ZNF792', 'MEIS1', 'HOXA10', 'MTA1', 'ZSCAN9', 'ZNF280D', 'BRD4', 'KLF12', 'MXD4', 'NRL', 'KAT7', 'ZNF747', 'ZMAT3', 'ZSCAN21', 'ZNF563', 'FOXC1', 'ZNF407', 'ZNF891', 'NFKB2', 'ZNF709', 'ZNF430', 'ZNF598', 'ZNF230', 'ZNF547', 'ZNF274', 'IRF9', 'ZNF543', 'CSRNP1', 'KLF6', 'ZFP90', 'BCL3', 'ZNF483', 'ZNF883']
-protein_order.reverse()
+protein_order = ['ZSCAN9', 'HOXA5', 'ZNF511', 'BRD4', 'ZNF280D', 'ZNF598', 'BCL3', 'KLF6', 'ZFP90', 'ZBTB38', 'MBD1', 'ZNF543', 'ZNF547', 'ZNF274', 'ZNF883', 'ZNF230', 'ZNF483', 'KLF12', 'MXD4', 'ZNF430', 'ZNF563', 'FOXC1', 'ZNF891', 'ZNF407', 'NFKB2', 'ZNF772', 'ZSCAN21', 'IRF9', 'CSRNP1', 'ZMAT3', 'ZNF747', 'NRL', 'ZNF691', 'MEIS1', 'ZNF414', 'HOXA10', 'ZNF792', 'KAT7', 'BAZ2A', 'ZNF556', 'ZNF580', 'MTA1', 'ERF', 'IKZF5', 'ZNF614', 'SMAD3', 'MIER3', 'MEF2D', 'GATAD2B', 'MEIS2', 'CBFB', 'ZNF331', 'CBX5', 'KDM3A', 'TAF15', 'ZSCAN31', 'KDM5B', 'SALL2', 'BORCS8', 'GLYR1', 'RFXAP', 'ZNF607', 'ZBTB25', 'SFPQ', 'ZNF709', 'ZNF221', 'TBP', 'ARNT2', 'POGK', 'ZNF605', 'ZNF350', 'KLF16', 'ZNF48', 'E2F8', 'ZNF788', 'ZHX2', 'MXD1', 'AGO2', 'CTCF', 'RAD21', 'STAG1', 'SMC3', 'H2AFZ', 'GABPA', 'GABPB1', 'NRF1', 'HNRNPLL', 'ELF1', 'LIN54', 'CREB1', 'USF1', 'ZNF687', 'PHF20', 'GATAD1', 'THAP11', 'NFYA', 'NFYB', 'HMGXB4', 'ZNF574', 'KAT8', 'ARID4B', 'YY1', 'ARID4A', 'GMEB1', 'NR2C2', 'ZFX', 'ZFY', 'PHF8', 'RBFOX2', 'MAX', 'MGA', 'EGR1', 'SAP130', 'E2F4', 'POLR2G', 'POLR2A', 'KMT2A', 'KMT2B', 'UBTF', 'TFAP4', 'ZBTB7B', 'LCORL', 'FOXK1', 'ZGPAT', 'IRF2', 'RBPJ', 'TARDBP', 'SP5', 'MNX1', 'REPIN1', 'SMAD7', 'ATF7', 'CCDC6', 'SPEN', 'YEATS4', 'MAZ', 'RBM39', 'SIN3A', 'DMAP1', 'XRCC5', 'THAP9', 'MXI1', 'MYC', 'TFDP2', 'ZNF501', 'KDM2A', 'ZFP91', 'TFDP1', 'YEATS2', 'SP4', 'TAF1', 'HDAC1', 'MYPOP', 'NONO', 'HOXA3', 'POU2F1', 'PATZ1', 'SP1', 'ETV5', 'RXRA', 'SALL1', 'ZNF292', 'HDAC2', 'ZNF217', 'THRA', 'MYBL2', 'RREB1', 'ELF3', 'ATF2', 'ASH2L', 'TFE3', 'ETV4', 'TBX2', 'HNF1B', 'PHF21A', 'DRAP1', 'ZNF710', 'DLX6', 'MIXL1', 'PITX1', 'ZNF503', 'MED1', 'RCOR2', 'HOMEZ', 'KDM1A', 'LCOR', 'ZNF219', 'PPARG', 'FOXO1', 'RXRB', 'JUN', 'SKI', 'HNF4G', 'NCOR1', 'ARID3A', 'GFI1', 'GATAD2A', 'HNF1A', 'ZNF609', 'FOXJ3', 'ISL2', 'HLF', 'HNF4A', 'JUND', 'CEBPB', 'PAXIP1', 'NR2F6', 'PROX1', 'CEBPG', 'NFIL3', 'TEAD1', 'TEAD4', 'ZMYM4', 'POGZ', 'TEAD3', 'SMAD4', 'CREM', 'FOSL2', 'CEBPA', 'FOXA1', 'FOXA2', 'BCL6', 'TCF7L2', 'ARID5B', 'FOXP1', 'FOXP4', 'FOXA3', 'SOX13', 'SOX5', 'SOX6', 'RARA', 'EP300', 'NCOA2', 'AHDC1', 'HMG20A', 'NFIC']
+# protein_order.reverse()
 # Filter and order the data
 available_proteins = [p for p in protein_order if p in tf_anchor_counts['Protein'].values]
 print(f"Plotting {len(available_proteins)} proteins: {available_proteins}")
@@ -142,7 +142,7 @@ else:
             bottom += values
 
     plt.tight_layout()
-    plt.savefig('/mnt/altnas/work/Kyle.Knightly/chipseq-analysis/hepg2/protein_ccre_dists.png', 
+    plt.savefig('type-enr-ordered-protein_ccre_dists.png', 
                 dpi=300, bbox_inches='tight')
     plt.show()
 
